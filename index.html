@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dyansg8 Tech | Web, ERP & Automation Builder</title>
+  <meta name="description" content="Dyansg8 Tech builds practical digital systems for websites, ERP, automation tools, Web3 bots, MT5 trading utilities, and business workflows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #060810;
+      --bg-2: #090d18;
+      --surface: rgba(255,255,255,0.045);
+      --surface-2: rgba(255,255,255,0.075);
+      --surface-3: rgba(255,255,255,0.11);
+      --border: rgba(255,255,255,0.09);
+      --border-2: rgba(255,255,255,0.15);
+      --text: #f2f7ff;
+      --muted: #8d98af;
+      --soft: #c9d5ed;
+      --cyan: #22d3ee;
+      --violet: #818cf8;
+      --lime: #a3e635;
+      --pink: #f0abfc;
+      --grad: linear-gradient(135deg, #22d3ee 0%, #60a5fa 46%, #818cf8 100%);
+      --grad-soft: linear-gradient(135deg, rgba(34,211,238,0.12), rgba(129,140,248,0.12));
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 36px;
+      --radius-2xl: 48px;
+      --shadow-card: 0 1px 0 rgba(255,255,255,0.06) inset, 0 28px 80px rgba(0,0,0,0.42);
+      --shadow-glow: 0 0 70px rgba(34,211,238,0.08), 0 34px 90px rgba(0,0,0,0.55);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .mesh-bg,
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .mesh-bg::before,
+    .mesh-bg::after,
+    .mesh-dot {
+      content: '';
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(1px);
+    }
+
+    .mesh-bg::before {
+      width: 720px;
+      height: 720px;
+      top: -250px;
+      left: -260px;
+      background: radial-gradient(circle, rgba(34,211,238,0.12), transparent 66%);
+      animation: driftA 20s ease-in-out infinite alternate;
+    }
+
+    .mesh-bg::after {
+      width: 820px;
+      height: 820px;
+      top: 40px;
+      right: -340px;
+      background: radial-gradient(circle, rgba(129,140,248,0.14), transparent 66%);
+      animation: driftB 24s ease-in-out infinite alternate;
+    }
+
+    .mesh-dot {
+      width: 620px;
+      height: 620px;
+      left: 24%;
+      bottom: -240px;
+      background: radial-gradient(circle, rgba(163,230,53,0.055), transparent 68%);
+      animation: driftC 26s ease-in-out infinite alternate;
+    }
+
+    .grid-bg {
+      z-index: -1;
+      background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(ellipse 76% 78% at 50% 38%, black 25%, transparent 100%);
+    }
+
+    @keyframes driftA {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(70px,90px,0) scale(1.12); }
+    }
+    @keyframes driftB {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(-90px,60px,0) scale(1.08); }
+    }
+    @keyframes driftC {
+      from { transform: translate3d(0,0,0) scale(1); }
+      to { transform: translate3d(80px,-50px,0) scale(1.09); }
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 14px 0;
+    }
+
+    .nav-shell {
+      border: 1px solid var(--border-2);
+      background: rgba(6,8,16,0.66);
+      border-radius: var(--radius-xl);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.07) inset, 0 20px 60px rgba(0,0,0,0.36);
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--grad);
+      color: #05101c;
+      font-family: 'Manrope', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      box-shadow: 0 16px 35px rgba(34,211,238,0.16);
+    }
+
+    .brand h1 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .brand p {
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .brand-byline {
+      display: block;
+      margin-top: 1px;
+      color: rgba(242,247,255,0.68);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .nav-links a {
+      border-radius: 999px;
+      padding: 9px 16px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 21px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--grad);
+      color: #06101c;
+      box-shadow: 0 0 28px rgba(34,211,238,0.18), 0 8px 24px rgba(34,211,238,0.12);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(34,211,238,0.28), 0 12px 36px rgba(34,211,238,0.2);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--border-2);
+      background: var(--surface-2);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-2px);
+      background: var(--surface-3);
+    }
+
+    .hero {
+      min-height: calc(100vh - 104px);
+      display: flex;
+      align-items: center;
+      padding: 58px 0 74px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(440px, 0.9fr);
+      gap: 54px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid rgba(34,211,238,0.23);
+      background: rgba(34,211,238,0.08);
+      color: #a5f3fc;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 26px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--cyan);
+      box-shadow: 0 0 18px rgba(34,211,238,0.8);
+      animation: pulseDot 2s ease infinite;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.72); }
+    }
+
+    .hero-title {
+      max-width: 780px;
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(40px, 4.8vw, 62px);
+      line-height: 1.01;
+      letter-spacing: -0.038em;
+      font-weight: 800;
+    }
+
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .owner-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      color: rgba(242,247,255,0.78);
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: 0.01em;
+    }
+
+    .owner-line::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--grad);
+      opacity: 0.85;
+    }
+
+    .owner-line strong {
+      color: var(--text);
+      font-weight: 800;
+    }
+
+    .hero-copy {
+      max-width: 615px;
+      margin-top: 18px;
+      color: var(--soft);
+      font-size: 16.6px;
+      line-height: 1.85;
+      font-weight: 450;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    .proof-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .proof-pill strong { color: var(--text); }
+
+    .hero-note {
+      margin-top: 38px;
+      border-left: 1px solid rgba(34,211,238,0.35);
+      padding-left: 18px;
+      max-width: 540px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.8;
+    }
+
+    .showcase {
+      position: relative;
+      border-radius: var(--radius-2xl);
+      padding: 2px;
+      background: linear-gradient(145deg, rgba(34,211,238,0.34), rgba(129,140,248,0.18), rgba(255,255,255,0.06));
+      box-shadow: var(--shadow-glow);
+      overflow: hidden;
+    }
+
+    .showcase::before {
+      content: '';
+      position: absolute;
+      inset: -60% -20% auto auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      background: rgba(34,211,238,0.16);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    .showcase-inner {
+      position: relative;
+      border-radius: calc(var(--radius-2xl) - 2px);
+      background: rgba(8,10,20,0.9);
+      backdrop-filter: blur(24px);
+      overflow: hidden;
+    }
+
+    .showcase-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 24px 24px 0;
+    }
+
+    .showcase-label p {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .showcase-label h3 {
+      margin-top: 3px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      font-weight: 800;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: #bbf7d0;
+      border: 1px solid rgba(34,197,94,0.22);
+      background: rgba(34,197,94,0.1);
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+
+    .status-chip::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 16px rgba(74,222,128,0.8);
+    }
+
+    .slider-viewport {
+      position: relative;
+      min-height: 505px;
+      margin-top: 18px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 10px 24px 20px;
+      opacity: 0;
+      transform: translate3d(32px, 0, 0) scale(0.985);
+      filter: blur(4px);
+      pointer-events: none;
+      will-change: opacity, transform, filter;
+      transition:
+        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+      pointer-events: auto;
+    }
+
+    .slide.leaving {
+      opacity: 0;
+      transform: translate3d(-24px, 0, 0) scale(0.99);
+      filter: blur(3px);
+    }
+
+    .slide-card {
+      min-height: 468px;
+      transform: translateY(6px);
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+      background: radial-gradient(ellipse at top right, rgba(34,211,238,0.12), transparent 46%), var(--surface);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slide.active .slide-card {
+      transform: translateY(0);
+    }
+
+    .slide-card::after {
+      content: attr(data-number);
+      position: absolute;
+      right: -8px;
+      bottom: -42px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 148px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.08em;
+      color: rgba(255,255,255,0.035);
+      pointer-events: none;
+    }
+
+    .slide-icon {
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: var(--grad);
+      color: #06101c;
+      font-family: 'Manrope', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      box-shadow: 0 16px 36px rgba(34,211,238,0.16);
+    }
+
+    .slide-kicker {
+      margin-top: 24px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .slide-title {
+      max-width: 390px;
+      margin-top: 12px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 30px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .slide-text {
+      max-width: 410px;
+      margin-top: 15px;
+      color: var(--soft);
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .slide-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .slide-mini {
+      min-height: 78px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.055);
+      border-radius: 20px;
+      padding: 14px;
+    }
+
+    .slide-mini span {
+      display: block;
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .slide-mini strong {
+      display: block;
+      margin-top: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 20px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 6px 24px 24px;
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slider-dot {
+      width: 34px;
+      height: 7px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      cursor: pointer;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1), background 0.45s ease, box-shadow 0.45s ease;
+    }
+
+    .slider-dot.active {
+      width: 54px;
+      background: var(--grad);
+      box-shadow: 0 0 16px rgba(34,211,238,0.28);
+    }
+
+    .slider-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .slider-button {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      border: 1px solid var(--border-2);
+      background: var(--surface-2);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.22s ease;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .slider-button:hover {
+      transform: translateY(-2px);
+      background: var(--surface-3);
+      border-color: rgba(34,211,238,0.28);
+      color: var(--cyan);
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 46px;
+    }
+
+    .mini-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-md);
+      padding: 17px;
+      transition: 0.25s ease;
+    }
+
+    .mini-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--grad-soft);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(34,211,238,0.2);
+    }
+
+    .mini-card:hover::before { opacity: 1; }
+
+    .mini-card strong,
+    .mini-card span {
+      position: relative;
+      z-index: 1;
+      display: block;
+    }
+
+    .mini-card strong {
+      font-family: 'Manrope', sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .mini-card span {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 11.5px;
+      font-weight: 650;
+    }
+
+    section { padding: 82px 0; }
+
+    .section-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 11.5px;
+      font-weight: 800;
+    }
+
+    .section-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(34px, 4.5vw, 60px);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 42px;
+    }
+
+    .section-desc {
+      max-width: 420px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 14.5px;
+    }
+
+    .position-panel,
+    .stack-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      border-radius: var(--radius-2xl);
+      padding: 36px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-card);
+    }
+
+    .position-panel::before,
+    .stack-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--grad-soft);
+      pointer-events: none;
+    }
+
+    .position-grid,
+    .stack-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .position-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .position-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      color: var(--soft);
+      font-size: 14px;
+      font-weight: 550;
+      transition: 0.25s ease;
+    }
+
+    .position-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34,211,238,0.24);
+      background: rgba(34,211,238,0.055);
+    }
+
+    .check {
+      flex: 0 0 auto;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 900;
+    }
+
+    .projects-grid,
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .project-card,
+    .skill-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      backdrop-filter: blur(18px);
+      transition: 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card::before,
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 1px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% -12%, rgba(34,211,238,0.08), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .project-card:hover,
+    .skill-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(34,211,238,0.23);
+      box-shadow: 0 0 0 1px rgba(34,211,238,0.08), 0 32px 80px rgba(0,0,0,0.45);
+    }
+
+    .project-card:hover::before,
+    .project-card:hover::after,
+    .skill-card:hover::before { opacity: 1; }
+
+    .project-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+
+    .project-icon,
+    .skill-icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--grad);
+      color: #06101c;
+      font-family: 'Manrope', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-icon {
+      margin-bottom: 20px;
+      background: var(--surface-3);
+      color: var(--violet);
+      border: 1px solid var(--border-2);
+      font-size: 13px;
+    }
+
+    .project-type {
+      border: 1px solid var(--border-2);
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .project-card h3,
+    .skill-card h3 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 21px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .project-card p {
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.75;
+    }
+
+    .impact {
+      margin: 16px 0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(34,211,238,0.06);
+      border: 1px solid rgba(34,211,238,0.15);
+      color: #a5f3fc !important;
+      font-size: 13px !important;
+      font-weight: 700;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .tags span,
+    .stack-list span {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .project-card:hover .tags span,
+    .stack-list span:hover {
+      color: var(--soft);
+      border-color: rgba(34,211,238,0.23);
+      background: rgba(34,211,238,0.06);
+    }
+
+    .skill-card ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .skill-card li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--soft);
+      font-size: 13.5px;
+      font-weight: 550;
+    }
+
+    .stack-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .stack-list span {
+      padding: 10px 14px;
+      font-size: 12.5px;
+    }
+
+    .journey-grid {
+      display: grid;
+      grid-template-columns: 0.84fr 1.16fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .sticky-note {
+      position: sticky;
+      top: 110px;
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: 32px;
+      backdrop-filter: blur(18px);
+    }
+
+    .sticky-note h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(30px, 3.5vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .sticky-note p {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 14.5px;
+    }
+
+    .timeline { display: grid; gap: 16px; }
+
+    .timeline-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: #ffffff;
+      color: #0f172a;
+      padding: 26px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      transition: transform 0.3s ease;
+    }
+
+    .timeline-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 4px;
+      background: var(--grad);
+    }
+
+    .timeline-card:hover { transform: translateX(4px); }
+
+    .timeline-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .timeline-meta span:first-child {
+      background: #f1f5f9;
+      color: #475569;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-meta span:last-child {
+      font-family: 'Manrope', sans-serif;
+      color: #94a3b8;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .timeline-card h3 {
+      font-family: 'Manrope', sans-serif;
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      font-weight: 700;
+    }
+
+    .timeline-card p {
+      margin-top: 12px;
+      color: #64748b;
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .contact-panel {
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+      border-radius: 48px;
+      padding: 16px;
+      backdrop-filter: blur(22px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .contact-dark,
+    .contact-cyan {
+      border-radius: 36px;
+      padding: 36px;
+    }
+
+    .contact-dark {
+      border: 1px solid var(--border-2);
+      background: rgba(8,10,20,0.8);
+    }
+
+    .contact-dark h2,
+    .contact-cyan h2 {
+      font-family: 'Manrope', sans-serif;
+      font-size: clamp(28px, 3.5vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    .contact-dark p,
+    .contact-cyan p {
+      margin-top: 16px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 14.5px;
+    }
+
+    .contact-links {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 18px;
+      padding: 14px 16px;
+      transition: 0.25s ease;
+    }
+
+    .contact-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(34,211,238,0.25);
+      background: rgba(34,211,238,0.055);
+    }
+
+    .icon-box {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(34,211,238,0.2);
+      background: rgba(34,211,238,0.1);
+      border-radius: 13px;
+      color: var(--cyan);
+      font-family: 'Manrope', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .contact-link small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+
+    .contact-link strong {
+      display: block;
+      margin-top: 2px;
+      font-size: 14.5px;
+      font-weight: 650;
+      word-break: break-word;
+    }
+
+    .contact-cyan {
+      background: var(--grad);
+      color: #06101c;
+    }
+
+    .contact-cyan p { color: rgba(6,8,16,0.65); }
+
+    .contact-star {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+      animation: rotateSlow 12s linear infinite;
+    }
+
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .contact-cyan .btn {
+      margin-top: 28px;
+      background: rgba(6,8,16,0.92);
+      color: #fff;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a { transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cyan); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 54px;
+      }
+
+      .showcase { max-width: 720px; }
+    }
+
+    @media (max-width: 980px) {
+      .nav-links,
+      .nav .btn-primary { display: none; }
+
+      .position-grid,
+      .stack-grid,
+      .journey-grid,
+      .contact-grid { grid-template-columns: 1fr; }
+
+      .projects-grid,
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .sticky-note { position: static; }
+    }
+
+    @media (max-width: 680px) {$1.slider-viewport { min-height: 560px; }
+      .slide-card { min-height: 520px; }
+      .showcase-top,
+      .slider-controls { align-items: flex-start; flex-direction: column; }
+      .slider-dots { width: 100%; }
+      .slider-dot { flex: 1; }
+      .slider-dot.active { flex: 1.5; }
+      .position-panel,
+      .stack-panel,
+      .contact-dark,
+      .contact-cyan { padding: 22px; }
+      section { padding: 56px 0; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mesh-bg"><div class="mesh-dot"></div></div>
+  <div class="grid-bg"></div>
+
+  <header class="nav">
+    <div class="container">
+      <div class="nav-shell">
+        <div class="nav-inner">
+          <a class="brand" href="#top" aria-label="Dyansg8 Tech home">
+            <div class="brand-mark">D8</div>
+            <div>
+              <h1>Dyansg8 Tech</h1>
+              <p>Web, ERP & Automation Builder</p>
+              <span class="brand-byline">by Diyan Nurpriyanto</span>
+            </div>
+          </a>
+
+          <nav class="nav-links" aria-label="Main navigation">
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#journey">Journey</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <a class="btn btn-primary" href="#contact">Work With Me →</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow"><span class="eyebrow-dot"></span>Web • ERP • Automation • Web3 • MT5</div>
+
+          <h2 class="hero-title">Build smarter <span class="grad-text">websites, ERP, and automation systems.</span></h2>
+
+          <p class="owner-line">Dyansg8 Tech portfolio by <strong>Diyan Nurpriyanto</strong></p>
+
+          <p class="hero-copy">
+            Dyansg8 Tech, led by Diyan Nurpriyanto, helps businesses turn ideas into practical digital systems, from company websites, ERP workflows, and production tools to automation systems, Web3 utilities, and MT5 trading logic.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">View Projects →</a>
+            <a class="btn btn-ghost" href="#contact">Start Discussion</a>
+          </div>
+
+          <div class="hero-proof">
+            <span class="proof-pill">✓ <strong>Production Systems</strong></span>
+            <span class="proof-pill">✓ <strong>VPS Deployment</strong></span>
+            <span class="proof-pill">✓ <strong>Bot Automation</strong></span>
+          </div>
+
+          <p class="hero-note">
+            Built for founders, teams, and small businesses that need a technical partner who understands workflow, execution, deployment, and real operational needs.
+          </p>
+        </div>
+
+        <div class="showcase reveal" aria-label="Dyansg8 Tech service showcase">
+          <div class="showcase-inner">
+            <div class="showcase-top">
+              <div class="showcase-label">
+                <p>Portfolio Showcase</p>
+                <h3>What Dyansg8 Tech builds</h3>
+              </div>
+              <span class="status-chip">Available for project</span>
+            </div>
+
+            <div class="slider-viewport">
+              <article class="slide active" data-slide="0">
+                <div class="slide-card" data-number="01">
+                  <div>
+                    <div class="slide-icon">WEB</div>
+                    <p class="slide-kicker">Business Websites</p>
+                    <h3 class="slide-title">Modern company profiles that build trust.</h3>
+                    <p class="slide-text">Responsive websites for consultants, organizations, and businesses that need credibility, clear service pages, and a polished first impression.</p>
+                  </div>
+                  <div class="slide-bottom">
+                    <div class="slide-mini"><span>Focus</span><strong>Company Profile</strong></div>
+                    <div class="slide-mini"><span>Output</span><strong>Fast public launch</strong></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="slide" data-slide="1">
+                <div class="slide-card" data-number="02">
+                  <div>
+                    <div class="slide-icon">ERP</div>
+                    <p class="slide-kicker">Business Systems</p>
+                    <h3 class="slide-title">ERP workflows for daily operations.</h3>
+                    <p class="slide-text">Practical systems for inventory, production, BOM, sales reports, user access, and operational workflows that help businesses run with better visibility.</p>
+                  </div>
+                  <div class="slide-bottom">
+                    <div class="slide-mini"><span>Focus</span><strong>Inventory & reports</strong></div>
+                    <div class="slide-mini"><span>Output</span><strong>Production-ready flow</strong></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="slide" data-slide="2">
+                <div class="slide-card" data-number="03">
+                  <div>
+                    <div class="slide-icon">BOT</div>
+                    <p class="slide-kicker">Automation Tools</p>
+                    <h3 class="slide-title">Bots and dashboards for faster execution.</h3>
+                    <p class="slide-text">Automation tools built with monitoring, alerts, cooldown logic, queue handling, dashboard controls, and safety-first execution for technical workflows.</p>
+                  </div>
+                  <div class="slide-bottom">
+                    <div class="slide-mini"><span>Focus</span><strong>Node.js automation</strong></div>
+                    <div class="slide-mini"><span>Output</span><strong>Controlled actions</strong></div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="slide" data-slide="3">
+                <div class="slide-card" data-number="04">
+                  <div>
+                    <div class="slide-icon">W3</div>
+                    <p class="slide-kicker">Web3 & MT5</p>
+                    <h3 class="slide-title">Tools for Web3 workflows and trading logic.</h3>
+                    <p class="slide-text">Solana utilities, airdrop workflows, Web3 monitoring concepts, MT5 trading logic, Telegram notifications, and risk-aware technical experiments.</p>
+                  </div>
+                  <div class="slide-bottom">
+                    <div class="slide-mini"><span>Focus</span><strong>Web3 & MT5</strong></div>
+                    <div class="slide-mini"><span>Output</span><strong>Safer experiments</strong></div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="slider-controls">
+              <div class="slider-dots" aria-label="Showcase slide controls">
+                <button class="slider-dot active" type="button" aria-label="Show Business Websites" data-target="0"></button>
+                <button class="slider-dot" type="button" aria-label="Show ERP Systems" data-target="1"></button>
+                <button class="slider-dot" type="button" aria-label="Show Automation Tools" data-target="2"></button>
+                <button class="slider-dot" type="button" aria-label="Show Web3 and MT5 Tools" data-target="3"></button>
+              </div>
+              <div class="slider-buttons">
+                <button class="slider-button" type="button" aria-label="Previous slide" id="prevSlide">‹</button>
+                <button class="slider-button" type="button" aria-label="Next slide" id="nextSlide">›</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container position-panel reveal">
+        <div class="position-grid">
+          <div>
+            <p class="section-kicker">Positioning</p>
+            <h2 class="section-title" style="font-size:clamp(30px,3.5vw,44px);">What Dyansg8 Tech brings to a project</h2>
+          </div>
+          <div class="position-list">
+            <div class="position-item"><span class="check">✓</span><span>Build practical systems, not just pretty screens.</span></div>
+            <div class="position-item"><span class="check">✓</span><span>Understand both business flow and technical execution.</span></div>
+            <div class="position-item"><span class="check">✓</span><span>Deploy, debug, maintain, and explain systems clearly.</span></div>
+            <div class="position-item"><span class="check">✓</span><span>Move fast while keeping backup, safety, and risk control in mind.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-kicker">Selected Projects</p>
+            <h2 class="section-title">A portfolio built from real problems, not template theater.</h2>
+          </div>
+          <p class="section-desc">Beberapa project bisa ditampilkan sebagai public case study, sementara detail sensitif dapat disimpan untuk pembahasan private dengan calon klien.</p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">▦</div>
+              <span class="project-type">Production ERP</span>
+            </div>
+            <h3>TalentCore ERP / ERP Global</h3>
+            <p>Laravel-based business management system for inventory, production/BOM, reporting, authentication, company access, and production deployment.</p>
+            <p class="impact">Live with an F&B customer and running in production.</p>
+            <div class="tags"><span>Laravel</span><span>MySQL</span><span>Inventory</span><span>BOM</span><span>Reports</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">MFG</div>
+              <span class="project-type">Manufacturing System</span>
+            </div>
+            <h3>Integrated Production System</h3>
+            <p>Private manufacturing production dashboard built to support daily production tools, material input, reject tracking, machine reports, and operational recaps across production areas.</p>
+            <p class="impact">Helps production teams access operational tools and reports from one centralized internal dashboard.</p>
+            <div class="tags"><span>Manufacturing</span><span>Production Dashboard</span><span>Internal Tools</span><span>Reporting</span><span>Workflow</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">⌁</div>
+              <span class="project-type">Trading Automation</span>
+            </div>
+            <h3>Fibo Musang Forex EA</h3>
+            <p>MT5 trading assistant/EA concept focused on H1 base zones, M15 entries, FVG logic, risk handling, and Telegram trade notifications.</p>
+            <p class="impact">Tested on live trading flow with profitable trade outcomes and iterative logic improvements.</p>
+            <div class="tags"><span>MT5</span><span>Trading Logic</span><span>FVG</span><span>Risk</span><span>Telegram</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">🤖</div>
+              <span class="project-type">Solana Bot</span>
+            </div>
+            <h3>Apex Sniper Bot</h3>
+            <p>Solana trading bot with route stability checks, holder safety filters, TP/SL logic, dashboard monitoring, PM2 deployment, and controlled automation.</p>
+            <p class="impact">Built with safety-first logic for small-size testing and controlled execution.</p>
+            <div class="tags"><span>Node.js</span><span>Solana</span><span>Jupiter</span><span>PM2</span><span>Dashboard</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">◎</div>
+              <span class="project-type">Web3 Automation</span>
+            </div>
+            <h3>Whale Dip Bot</h3>
+            <p>Whale-sell detector and reaction bot concept using Solana transaction monitoring, queue-based parsing, Jupiter quote/swap routing, and cooldown protection.</p>
+            <p class="impact">Designed to detect large sell pressure and manage automated entry/exit attempts.</p>
+            <div class="tags"><span>Solana Web3.js</span><span>Helius</span><span>Jupiter API</span><span>WebSocket</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">✦</div>
+              <span class="project-type">Airdrop Tools</span>
+            </div>
+            <h3>Airdrop Tracker & Workflow</h3>
+            <p>Lightweight tracker and workflow system for monitoring Web3 tasks, daily activities, faucet routines, social quests, and project engagement planning.</p>
+            <p class="impact">Built around consistency, task visibility, and safer participation habits.</p>
+            <div class="tags"><span>Web3</span><span>Airdrop</span><span>Task Tracking</span><span>Workflow</span></div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-top">
+              <div class="project-icon">◈</div>
+              <span class="project-type">Web Development</span>
+            </div>
+            <h3>Company Profile & Business Websites</h3>
+            <p>Modern responsive websites for company profiles, consultants, organizations, and business landing pages with credibility-focused layouts.</p>
+            <p class="impact">Ready for client-facing presentation, fast deployment, and customization.</p>
+            <div class="tags"><span>HTML</span><span>React</span><span>Responsive UI</span><span>Landing Page</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <p class="section-kicker">Skills</p>
+            <h2 class="section-title">Technical skills with business context.</h2>
+          </div>
+        </div>
+
+        <div class="skills-grid">
+          <article class="skill-card reveal">
+            <div class="skill-icon">{ }</div>
+            <h3>Full-Stack Web Development</h3>
+            <ul>
+              <li><span class="check">✓</span>Laravel / PHP</li>
+              <li><span class="check">✓</span>React / JSX</li>
+              <li><span class="check">✓</span>HTML / CSS / responsive UI</li>
+              <li><span class="check">✓</span>Authentication & dashboard UI</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-icon">DB</div>
+            <h3>Database & Business Systems</h3>
+            <ul>
+              <li><span class="check">✓</span>MySQL</li>
+              <li><span class="check">✓</span>Inventory logic</li>
+              <li><span class="check">✓</span>BOM management</li>
+              <li><span class="check">✓</span>Sales reports</li>
+              <li><span class="check">✓</span>Backup & restore validation</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-icon">VPS</div>
+            <h3>Server & Deployment</h3>
+            <ul>
+              <li><span class="check">✓</span>Ubuntu VPS</li>
+              <li><span class="check">✓</span>Nginx</li>
+              <li><span class="check">✓</span>PHP-FPM</li>
+              <li><span class="check">✓</span>PM2</li>
+              <li><span class="check">✓</span>SSL & production deployment</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-icon">⚙</div>
+            <h3>Automation & Bots</h3>
+            <ul>
+              <li><span class="check">✓</span>Node.js bots</li>
+              <li><span class="check">✓</span>MT5 trading automation</li>
+              <li><span class="check">✓</span>Telegram alerts</li>
+              <li><span class="check">✓</span>Queue handling</li>
+              <li><span class="check">✓</span>Risk controls</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-icon">W3</div>
+            <h3>Web3 / Solana Tooling</h3>
+            <ul>
+              <li><span class="check">✓</span>Solana Web3.js</li>
+              <li><span class="check">✓</span>Jupiter quote/swap</li>
+              <li><span class="check">✓</span>RPC/WebSocket monitoring</li>
+              <li><span class="check">✓</span>Wallet-safe logic</li>
+              <li><span class="check">✓</span>Airdrop workflow</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal">
+            <div class="skill-icon">BIZ</div>
+            <h3>Product & Client Handling</h3>
+            <ul>
+              <li><span class="check">✓</span>Scope mapping</li>
+              <li><span class="check">✓</span>Client troubleshooting</li>
+              <li><span class="check">✓</span>Requirement breakdown</li>
+              <li><span class="check">✓</span>Production support</li>
+              <li><span class="check">✓</span>Practical documentation</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container stack-panel reveal">
+        <div class="stack-grid">
+          <div>
+            <p class="section-kicker">Tech Stack</p>
+            <h2 class="section-title" style="font-size:clamp(30px,3.5vw,44px);">Tools used to ship.</h2>
+          </div>
+          <div class="stack-list">
+            <span>Laravel</span><span>PHP</span><span>MySQL</span><span>React</span><span>HTML</span><span>CSS</span><span>Manufacturing Workflow</span><span>Production Dashboard</span><span>Node.js</span><span>Express</span><span>PM2</span><span>Nginx</span><span>Ubuntu VPS</span><span>Git/GitHub</span><span>MT5</span><span>Telegram Bot</span><span>Solana Web3.js</span><span>Jupiter API</span><span>Helius RPC</span><span>rclone / Google Drive Backup</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="journey">
+      <div class="container journey-grid">
+        <div class="sticky-note reveal">
+          <p class="section-kicker">Journey</p>
+          <h2>Built through real projects, debugging, and shipping.</h2>
+          <p>Fokus Dyansg8 Tech bukan hanya membuat fitur terlihat jadi, tapi memastikan sistem bisa dipahami, dijaga, dicadangkan, dan dikembangkan.</p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-card reveal">
+            <div class="timeline-meta"><span>Production</span><span>01</span></div>
+            <h3>ERP system used by real client</h3>
+            <p>TalentCore / ERP Global is already supporting live F&B business operations with modules for stock, production, reports, and business workflows.</p>
+          </article>
+          <article class="timeline-card reveal">
+            <div class="timeline-meta"><span>Infrastructure</span><span>02</span></div>
+            <h3>Production server operations</h3>
+            <p>Handled VPS deployment, Nginx configuration, SSL, PHP-FPM, PM2 processes, backup flow, and Google Drive backup verification.</p>
+          </article>
+          <article class="timeline-card reveal">
+            <div class="timeline-meta"><span>Automation</span><span>03</span></div>
+            <h3>Trading and Web3 bot experimentation</h3>
+            <p>Built and refined automation systems with safety filters, cooldowns, route checks, dashboard monitoring, and controlled risk settings.</p>
+          </article>
+          <article class="timeline-card reveal">
+            <div class="timeline-meta"><span>Client Work</span><span>04</span></div>
+            <h3>Business website delivery direction</h3>
+            <p>Prepared modern company profile website concepts for consulting businesses, focusing on credibility, service clarity, and conversion.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container contact-panel reveal">
+        <div class="contact-grid">
+          <div class="contact-dark">
+            <p class="section-kicker">Contact</p>
+            <h2>Have a business system, website, or automation idea?</h2>
+            <p>Dyansg8 Tech bisa membantu dari diskusi kebutuhan, perancangan scope, pembuatan prototype, development, deployment, sampai support awal setelah sistem berjalan.</p>
+
+            <div class="contact-links">
+              <a class="contact-link" href="mailto:dyan.rumahimaji@gmail.com">
+                <span class="icon-box">@</span>
+                <span><small>Email</small><strong>dyan.rumahimaji@gmail.com</strong></span>
+              </a>
+              <a class="contact-link" href="https://github.com/diyanwinner" target="_blank" rel="noreferrer">
+                <span class="icon-box">GH</span>
+                <span><small>Code Portfolio</small><strong>github.com/diyanwinner</strong></span>
+              </a>
+              <a class="contact-link" href="https://diyanwinner.github.io/airdrop/" target="_blank" rel="noreferrer">
+                <span class="icon-box">↗</span>
+                <span><small>Live Tool</small><strong>Airdrop Tracker</strong></span>
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-cyan">
+            <div class="contact-star">✦</div>
+            <h2>Practical tech partner for founders, teams, and small businesses.</h2>
+            <p>Dyansg8 Tech cocok untuk project yang butuh partner teknis yang bisa memahami kebutuhan bisnis, merapikan alur, membangun fitur, dan ikut menjaga sistem setelah go-live.</p>
+            <a class="btn" href="mailto:dyan.rumahimaji@gmail.com">Start a Conversation →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2026 Dyansg8 Tech by Diyan Nurpriyanto. Web, ERP, Automation & Digital Systems.</p>
+      <div class="footer-links">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const group = Array.from(entry.target.parentElement.querySelectorAll('.reveal'));
+          const index = Math.max(0, group.indexOf(entry.target));
+          setTimeout(() => {
+            entry.target.classList.add('show');
+          }, index * 70);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    reveals.forEach((item) => observer.observe(item));
+
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const dots = Array.from(document.querySelectorAll('.slider-dot'));
+    const prevButton = document.getElementById('prevSlide');
+    const nextButton = document.getElementById('nextSlide');
+    let activeSlide = 0;
+    let autoSlideTimer;
+
+    function showSlide(index) {
+      const nextSlide = (index + slides.length) % slides.length;
+      if (nextSlide === activeSlide) return;
+
+      const current = slides[activeSlide];
+      current.classList.add('leaving');
+      current.classList.remove('active');
+
+      activeSlide = nextSlide;
+
+      slides.forEach((slide, idx) => {
+        if (idx !== activeSlide && slide !== current) {
+          slide.classList.remove('active', 'leaving');
+        }
+      });
+
+      requestAnimationFrame(() => {
+        slides[activeSlide].classList.add('active');
+      });
+
+      setTimeout(() => {
+        current.classList.remove('leaving');
+      }, 900);
+
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeSlide);
+      });
+    }
+
+    function startAutoSlide() {
+      clearInterval(autoSlideTimer);
+      autoSlideTimer = setInterval(() => {
+        showSlide(activeSlide + 1);
+      }, 5200);
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        showSlide(Number(dot.dataset.target));
+        startAutoSlide();
+      });
+    });
+
+    prevButton.addEventListener('click', () => {
+      showSlide(activeSlide - 1);
+      startAutoSlide();
+    });
+
+    nextButton.addEventListener('click', () => {
+      showSlide(activeSlide + 1);
+      startAutoSlide();
+    });
+
+    startAutoSlide();
+  </script>
+</body>
+</html>
